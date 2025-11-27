@@ -237,7 +237,7 @@ const Staff = () => {
         dataIndex: "name",
         key: "name",
         render: (value, record) => (
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => navigate(`/staff/staff-detail/${record.id}`)}>
             <Avatar
               name={`${record.firstName} ${record.lastName}`}
               imageUrl={record.image ? record.image : null}

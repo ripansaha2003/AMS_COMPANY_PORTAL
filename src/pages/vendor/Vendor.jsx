@@ -216,7 +216,10 @@ const Vendors = () => {
       dataIndex: "name",
       key: "name",
       render: (value, record) => (
-        <div className="flex items-center space-x-3">
+        <div 
+          className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+          onClick={() => navigate(`/vendor/vendor-detail/${record.id}`, { state: record })}
+        >
           {record?.logo ? (
             <div className="w-8 h-8 rounded-full overflow-hidden">
               <img

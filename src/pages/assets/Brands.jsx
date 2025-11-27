@@ -183,7 +183,10 @@ const Brands = () => {
       dataIndex: "brandName",
       key: "brandName",
       render: (value, record) => (
-        <div className="flex items-center space-x-3">
+        <div 
+          className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+          onClick={() => navigate(`/asset/brand/brand-detail/${record.id}`, { state: record })}
+        >
           <BrandIcon brandName={value} brandLogo={record.logo} />
           <div className="font-medium text-gray-900">{value}</div>
         </div>

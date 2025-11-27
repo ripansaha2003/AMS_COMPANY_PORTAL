@@ -164,7 +164,10 @@ const Assets = () => {
       dataIndex: "assetName",
       key: "assetName",
       render: (value, record) => (
-        <div className="flex items-center space-x-3">
+        <div 
+          className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+          onClick={() => navigate(`/asset/asset-detail/${record.id}`, { state: record })}
+        >
           {record?.primaryImage ? (
             <div className="w-8 h-8 rounded-full overflow-hidden">
               <img
