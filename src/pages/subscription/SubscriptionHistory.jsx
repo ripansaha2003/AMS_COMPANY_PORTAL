@@ -31,17 +31,17 @@ const SubscriptionHistory = () => {
         const merged = res.data.data.flatMap(record => {
           // Map both old and new data with transaction ID, price, and plan limits
           return [
-            { 
-              ...record.old_data, 
-              paypal_transaction_id: record.paypal_transaction_id,
-              price: record?.price || record.old_data?.price || record.old_data?.salePrice,
-              no_staff: record.no_staff,
-              no_assets: record.no_assets,
-              no_clients: record.no_clients,
-              no_vendors: record.no_vendors,
-              durationInDays: record.durationInDays,
-              action: 'Old' 
-            },
+            // { 
+            //   ...record.old_data, 
+            //   paypal_transaction_id: record.paypal_transaction_id,
+            //   price: record?.price || record.old_data?.price || record.old_data?.salePrice,
+            //   no_staff: record.no_staff,
+            //   no_assets: record.no_assets,
+            //   no_clients: record.no_clients,
+            //   no_vendors: record.no_vendors,
+            //   durationInDays: record.durationInDays,
+            //   action: 'Old' 
+            // },
             { 
               ...record.new_data, 
               paypal_transaction_id: record.paypal_transaction_id,
@@ -261,8 +261,8 @@ const SubscriptionHistory = () => {
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Duration:</label>
-                  <p className="text-sm text-gray-600">{selectedSubscription?.duration}</p>
+                  <label className="text-sm font-medium text-gray-700">Duration in Days:</label>
+                  <p className="text-sm text-gray-600">{selectedSubscription?.durationInDays} days</p>
                 </div>
 
                 <div>

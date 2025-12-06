@@ -61,7 +61,7 @@ const Holidays = () => {
     try {
       const organizationId = getOrganizationId();
       await axiosPrivate.delete(
-        `/organizations/${organizationId}/holiday/${holidayToDelete.id}`
+        `/organizations/${organizationId}/holiday/${holidayToDelete.holiday_id || holidayToDelete.id}`
       );
       // Refresh the holidays list
       fetchHolidays();
@@ -127,8 +127,9 @@ const Holidays = () => {
   // Format holidays data for table display
   const formattedHolidays = holidays.map((holiday) => ({
     ...holiday,
-    key: holiday.id,
-    date: formatDateForDisplay(holiday.date),
+    key: holiday.holiday_id || holiday.id,
+    dateDisplay: formatDateForDisplay(holiday.date), // For display only
+    date: holiday.date, // Keep original date format for editing
     departmentAssigned: holiday.department_name || holiday.department || "All",
     shiftsAssigned:
       holiday.working_hours_name || holiday.working_hours || "All",
@@ -144,8 +145,8 @@ const Holidays = () => {
     },
     {
       title: "Date",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "dateDisplay",
+      key: "dateDisplay",
       width: "15%",
     },
     {

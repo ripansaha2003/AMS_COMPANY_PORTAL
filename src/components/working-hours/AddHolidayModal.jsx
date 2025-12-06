@@ -123,12 +123,16 @@ export default function AddHolidayModal({ children, open, onOpenChange, holiday,
   // Update form data when holiday prop changes (for editing)
   useEffect(() => {
     if (holiday && open) {
+      // Convert date from API format (YYYY-MM-DD) to display format (DD/MM/YYYY)
+      const displayDate = formatDateForDisplay(holiday.date) || "";
       setFormData({
         // display DD/MM/YYYY in the visible field
-        date: formatDateForDisplay(holiday.date) || "",
+        date: displayDate,
         holidayName: holiday.holiday_name || "",
-        department: holiday.department || "",
-        workingHours: holiday.working_hours || "",
+        // Use department_id if available, otherwise fall back to department
+        department: holiday.department_id || holiday.department || "",
+        // Use working_hours_id if available, otherwise fall back to working_hours
+        workingHours: holiday.working_hours_id || holiday.working_hours || "",
       });
       setErrors({});
     } else if (!holiday && open) {
@@ -178,17 +182,25 @@ export default function AddHolidayModal({ children, open, onOpenChange, holiday,
       setLoading(true);
       const organizationId = getOrganizationId();
 
+      // Convert date from DD/MM/YYYY to YYYY-MM-DD format for API
+      let dateForApi = formData.date;
+      if (formData.date && formData.date.includes("/")) {
+        // It's in DD/MM/YYYY format, convert to YYYY-MM-DD
+        dateForApi = displayToIso(formData.date);
+      }
+
       const requestData = {
-        date: formData.date, // Already in YYYY-MM-DD format from input
+        date: dateForApi,
         holiday_name: formData.holidayName.trim(),
         department: formData.department,
         working_hours: formData.workingHours,
       };
 
       if (holiday) {
-        // Edit existing holiday
+        // Edit existing holiday - use holiday_id if available, otherwise fall back to id
+        const holidayId = holiday.holiday_id || holiday.id;
         await axiosPrivate.put(
-          `/organizations/${organizationId}/holiday/${holiday.id}`,
+          `/organizations/${organizationId}/holiday/${holidayId}`,
           requestData
         );
         console.log("Holiday updated successfully");
