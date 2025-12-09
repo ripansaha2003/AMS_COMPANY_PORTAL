@@ -267,7 +267,7 @@ const uploadAttachmentsWithPresignedUrls = async (
       setFormData((prev) => ({
         ...prev,
         subject: "",
-        description: ".",
+        description: "",
         requester: storedUser?.poc_name || "",
         dueDate: "25/05/2025",
       }));
